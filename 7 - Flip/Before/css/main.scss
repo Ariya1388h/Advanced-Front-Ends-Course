@@ -24,3 +24,12 @@ ul {
         cursor: pointer;
     }
 }
+
+.adjust {
+    flex-direction: column;
+
+    li {
+        background: red;
+        font-size: 5rem;
+    }
+}

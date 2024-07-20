@@ -32,20 +32,20 @@
         <div class="line"></div>
         <span>diabolical</span>
     </section>
-    <section></section>
+    <section style="height: 120vh"></section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script> 
     <script>
 
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: '.primary',
                 start: 'top 20%',
-                end: 'bottom center',
+                bottom: 'bottom center',
                 toggleActions: 'play reverse restart reverse',
-                pin: false
+                //pin: true,
             },
             defaults: {
                 ease: 'power3.out',
@@ -57,8 +57,9 @@
             scrollTrigger: {
                 trigger: '.primary',
                 start: 'top 30%',
-                end: '40% top',
-                scrub: 2
+                bottom: '40% top',
+                scrub: 2,
+                markers: false
             }
         })
 
@@ -73,25 +74,30 @@
                 yPercent: 210,
                 opacity: 0
             }, "-=1")
-
+        
         scrubTl
             .from('.line', {
                 scaleY: 0
             })
-            .from('span', {
+            .to('span', {
                 x: 0,
-                yPercent: 0
+                xPercent: 0
             }, "<")
 
 
             const lenis = new Lenis()
 
-            function raf(time) {
-            lenis.raf(time)
-            requestAnimationFrame(raf)
-            }
+        lenis.on('scroll', (e) => {
 
-            requestAnimationFrame(raf)
+        })
+
+        function raf(time) {
+        lenis.raf(time)
+        requestAnimationFrame(raf)
+        }
+
+        requestAnimationFrame(raf)
+
     </script>
 </body>
 </html>

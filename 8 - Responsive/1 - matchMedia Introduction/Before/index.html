@@ -21,28 +21,36 @@
     <script src="https://unpkg.com/split-type"></script>
     <script>
 
-        // split type
-        const text = new SplitType('h1')
+        let mm = gsap.matchMedia()
 
+        const text = new SplitType('h1')
         const tl = gsap.timeline({defaults:{ ease: 'power4.inOut' }})
 
+        // match media
+        mm.add("(min-width: 600px)", () => {
 
-        gsap.set('h1', { autoAlpha: 1})
+            gsap.set('h1', { autoAlpha: 1})
 
-        tl.from(text.chars, {
-            y: 40,
-            opacity: 0,
-            skewX: 30,
-            stagger: .03,
-            duration: 1
+            tl.from(text.chars, {
+                y: 40,
+                opacity: 0,
+                skewX: 30,
+                stagger: .03,
+                duration: 1
+            })
         })
-        .to(text.chars, {
-            y: -40,
-            opacity: 0,
-            skewX: -10,
-            duration: 1,
-            stagger: .03
+
+        mm.add("(max-width: 599px)", () => {
+
+            gsap.set('h1', { autoAlpha: 1})
+
         })
+
+
+        // split type
+
+
+        
 
         // smooth scroll
 

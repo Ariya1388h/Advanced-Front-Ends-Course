@@ -59,6 +59,36 @@
 
     <script>
 
+        gsap.registerPlugin(Flip)
+
+        const cardContainer = document.querySelector('.cards')
+        const cards = document.querySelector('.card')
+        const sortBtn = document.querySelector('button')
+        const btnLabel = document.querySelector('button span')
+        const sortIcon = document.querySelector('button svg')
+
+        let sortRows = false
+
+        sortBtn.addEventListener('click', () => {
+            const state = Flip.getState(".cards, .card")
+
+            cardContainer.classList.toggle('sort')
+
+            Flip.from(state, {
+                duration: 0.5,
+                ease: 'power2.inOut'
+            })
+
+            if (!sortRows) {
+                btnLabel.innerHTML = 'Columns'
+                sortIcon.style.transform = 'rotate(90deg)';
+                sortRows = true
+            } else {
+                btnLabel.innerHTML = 'Rows'
+                sortIcon.style.transform = 'rotate(360deg)';
+                sortRows = false
+            }
+        })
 
     </script>
 </body>

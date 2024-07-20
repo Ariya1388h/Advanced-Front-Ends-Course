@@ -13,12 +13,12 @@
     <section class="intro">
         <h1>scroll down</h1>
     </section>
-
     <section class="gallery">
         <ul>
-            <li>
+            <li data-depth='0.10'>
                 <a href="#">
                     <img src="art1.jpg" alt="Syntholtic">
+                    <div class="img"></div>
 
                     <div class="border"></div>
 
@@ -28,7 +28,7 @@
                     </div>
                 </a>
             </li>
-            <li>
+            <li data-depth='0.20'>
                 <a href="#">
                     <img src="art2.jpg" alt="Bumblebee">
 
@@ -40,7 +40,7 @@
                     </div>
                 </a>
             </li>
-            <li>
+            <li data-depth='0.30'>
                 <a href="#">
                     <img src="art3.jpg" alt="Smorg">
 
@@ -52,7 +52,7 @@
                     </div>
                 </a>
             </li>
-            <li>
+            <li data-depth='0.40'>
                 <a href="#">
                     <img src="art4.jpg" alt="Violeta">
 
@@ -75,16 +75,125 @@
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
     <script>
 
-        // smooth scroll
 
-        const lenis = new Lenis()
 
-        function raf(time) {
-        lenis.raf(time)
-        requestAnimationFrame(raf)
+
+    const gallery = gsap.utils.toArray('img')
+
+    gsap.set('img', {
+        clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)'
+    })
+    gsap.set('.border', {
+        scaleX: 0
+    })
+    gsap.set(['span', 'p'], {
+        yPercent: 100
+    })
+
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: 'section.gallery',
+            start: 'top 20%',
+            end: 'bottom top',
+            toggleActions: 'play none play reverse'
+        },
+        defaults: {
+            ease: 'power4.inOut'
         }
+    })
 
-        requestAnimationFrame(raf)
+    tl
+        .from('li', {
+            y: -100,
+            stagger: .1
+        })
+        .to('img', {
+            clipPath: 'polygon(0% 95%, 100% 49%, 100% 100%, 0 100%)'
+        }, "<")
+        .to('img', {
+            clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
+        }, "-=.5")
+        .to('.border', {
+            scaleX: 1
+        }, "-=.5")
+        .to(['span', 'p'], {
+            yPercent: 0,
+            stagger: .1
+        }, "-=.5")
+
+
+    gallery.forEach(img => {
+
+        let p = img.closest('a').querySelector('p')
+        let originalText = p.innerText
+
+        img.addEventListener('mouseenter', () => {
+            gsap.to(img, {
+                clipPath: 'polygon(0% 13%, 100% 0%, 100% 87%, 0% 100%)'
+            })
+            
+            randomType(p, '01', 500, true)
+        })
+        
+        img.addEventListener('mouseleave', () => {
+            gsap.to(img, {
+                clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
+            })
+            p.innerText = originalText
+        })
+    })
+
+
+
+    function randomType(element, characters, duration, sequential = false) {
+        let originalText = element.innerText;
+        let textArray = originalText.split('');
+        let charactersArray = characters.split('');
+        let startTime = new Date().getTime();
+        let interval;
+
+        if (sequential) {
+            let currentIndex = 0;
+            interval = setInterval(function() {
+                textArray[currentIndex] = charactersArray[Math.floor(Math.random() * charactersArray.length)];
+                element.innerText = textArray.join('');
+                currentIndex++;
+                if (currentIndex === textArray.length) {
+                    currentIndex = 0;
+                }
+                if (new Date().getTime() - startTime >= duration) {
+                    clearInterval(interval);
+                    element.innerText = originalText;
+                }
+            }, 20);
+        } else {
+            interval = setInterval(function() {
+                for (let i = 0; i < textArray.length; i++) {
+                    textArray[i] = charactersArray[Math.floor(Math.random() * charactersArray.length)];
+                }
+                element.innerText = textArray.join('');
+                if (new Date().getTime() - startTime >= duration) {
+                    clearInterval(interval);
+                    element.innerText = originalText;
+                }
+            }, 0);
+        }
+    }
+
+
+    const lenis = new Lenis()
+
+    function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+    }
+
+    requestAnimationFrame(raf)
+
+
+
+
+
 
     </script>
 </body>

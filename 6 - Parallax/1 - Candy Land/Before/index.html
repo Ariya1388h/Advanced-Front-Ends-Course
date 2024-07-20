@@ -12,6 +12,16 @@
 
 <body>
 
+    <img src="images/mask.png" class="mask" alt="Mask graphic">
+
+    <section>
+        <h1 class="parallax" data-speed="400">CandyVerse</h1>
+        <img class="bg parallax" data-speed="0" src="images/bg.jpg" alt="background">
+        <img class="middle-bg parallax" data-speed="10" src="images/middle-bg.png" alt="background">
+        <img class="cupcake parallax" data-speed="-12" src="images/cupcake.png" alt="background">
+    </section>
+
+    <section></section>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -20,7 +30,17 @@
 
     <script>
 
+        const images = gsap.utils.toArray('.parallax')
 
+        images.forEach(image => {
+            gsap.to(image, {
+                yPercent: image.dataset.speed,
+                invalidateOnRefresh: true,
+                scrollTrigger: {
+                    scrub: true
+                }
+            })
+        })
 
         // smooth scroll
 

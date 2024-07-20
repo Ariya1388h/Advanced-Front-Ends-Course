@@ -36,36 +36,37 @@
             let { isMobile, isDesktop, reduceMotion } = context.conditions
 
             console.log(reduceMotion)
-            if (reduceMotion !== true) {
 
-            tl
-                .to(['.fade1', '.fade2', '.fade3'], {
-                    scaleY: 1,
-                    stagger: .2
-                })
-                .to('h1', {
-                    x: 0,
-                    duration: 2,
-                    ease: "elastic.out(1, 0.5)"
-                }, "-=.5")
-                .to('.fade1', {
-                    scaleY: 0
-                })
-                .to('.fade3', {
-                    scaleY: 0,
-                    transformOrigin: 'bottom'
-                }, "-=.5")
-                .to('.fade2', {
-                    height: '100vh'
-                }, "-=.4")
-                .to('h1', {
-                    scale: .6
-                }, "-=.5")
+
+            if (reduceMotion !== true) {
+                tl
+                    .to(['.fade1', '.fade2', '.fade3'], {
+                        scaleY: 1,
+                        stagger: .2
+                    })
+                    .to('h1', {
+                        x: 0,
+                        duration: 2,
+                        ease: "elastic.out(1, 0.5)"
+                    }, "-=.5")
+                    .to('.fade1', {
+                        scaleY: 0
+                    })
+                    .to('.fade3', {
+                        scaleY: 0,
+                        transformOrigin: 'bottom'
+                    }, "-=.5")
+                    .to('.fade2', {
+                        height: '100vh'
+                    }, "-=.4")
+                    .to('h1', {
+                        scale: .6
+                    }, "-=.5")
 
             } else {
-                gsap.set('.fade2', { opacity: 0, scaleY: 1})
 
-                            
+                gsap.set('.fade2', { opacity: 0, scaleY: 1})
+            
                 tl
                     .to('h1', {
                         x: 0
@@ -78,11 +79,11 @@
                     .to('h1', {
                         scale: .6
                     }, "-=.5")
-
-
+            
             }
-
         })
+
+
 
 
        
